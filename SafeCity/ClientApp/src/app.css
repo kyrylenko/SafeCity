@@ -1,0 +1,32 @@
+.projectname {
+  margin-bottom: 0; }
+
+.intro {
+  margin-bottom: 10px; }
+
+.projectname .lbl {
+  font-size: 18px;
+  text-transform: initial;
+  letter-spacing: 0;
+  background-size: 20px;
+  padding: 5px 10px 5px 42px;
+  line-height: 25px;
+  float: left;
+  margin-top: 4px;
+  margin-right: 15px;
+  cursor: default; }
+
+.projectname .lbl:hover {
+  background-color: #f7f7f7; }
+
+.project-address {
+  margin-bottom: 16px; }
+
+.address-pin {
+  width: 24px;
+  height: 24px; }
+
+/* .lbl-fundraising, .lbl-collecting {
+  background-image: url('./assets/icons/money@2x.png');
+  background-size: 32px;
+} */
