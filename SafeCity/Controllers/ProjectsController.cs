@@ -3,6 +3,7 @@ using SafeCity.DTOs;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SafeCity.Core;
 
 namespace SafeCity.Controllers
 {
@@ -11,23 +12,58 @@ namespace SafeCity.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly ILogger<ProjectsController> _logger;
-        public ProjectsController(ILogger<ProjectsController> logger)
+        private readonly SafeCityContext _ctx;
+        
+        public ProjectsController(ILogger<ProjectsController> logger, SafeCityContext ctx)
         {
             _logger = logger;
+            _ctx = ctx;
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(ProjectDataStore.Current.Projects);
+            var projects = _ctx.Projects.ToList()
+                .Select(x=>new ProjectBaseDto()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    AddressName = x.AddressName,
+                    Logo = x.Logo,
+                    ShortDescription = x.ShortDescription,
+                    RequiredAmount = x.RequiredAmount,
+                    State = x.State
+                });
+
+            return Ok(projects);
         }
 
         [HttpGet("{id:int}", Name = "GetById")]
         public IActionResult GetById(int id)
         {
-            var result = ProjectDataStore.Current.Projects.Find(x => x.Id == id);
+            var x = _ctx.Projects.Find(id);
+            if (x == null)
+            {
+                return NotFound();
+            }
 
-            return result != null ? (ActionResult)Ok(result) : NotFound();
+            var dto = new ProjectDto()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                AddressName = x.AddressName,
+                Logo = x.Logo,
+                ShortDescription = x.ShortDescription,
+                RequiredAmount = x.RequiredAmount,
+                State = x.State,
+                LongDescription = x.LongDescription,
+                Lat = x.Lat,
+                Lon = x.Lon,
+                Images = x.Images,
+                Raised = x.Donations.Sum(d => d.Amount)
+            };
+
+            return Ok(dto);
         }
 
         [HttpPost]

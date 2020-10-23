@@ -38,7 +38,10 @@ namespace SafeCity
                     Lat = 49.857538,
                     Lon = 24.026658,
                     Logo = "https://i.imgur.com/3QtX0ea.jpg",
-                    Images = new []{ "https://i.imgur.com/3QtX0ea.jpg", "https://i.imgur.com/xrwczlk.png", "https://i.imgur.com/a66KMDd.png"},
+                    Images = new []{ 
+                        "https://i.imgur.com/3QtX0ea.jpg", 
+                        "https://i.imgur.com/xrwczlk.png", 
+                        "https://i.imgur.com/a66KMDd.png"},
                     RequiredAmount = 5000,
                     Raised = 8313,
                     State = ProjectState.InProgress,
