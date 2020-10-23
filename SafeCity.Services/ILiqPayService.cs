@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using SafeCity.Services.DTOs;
+﻿using SafeCity.Services.DTOs;
 
 namespace SafeCity.Services
 {

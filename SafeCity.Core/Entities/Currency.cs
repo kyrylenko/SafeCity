@@ -9,6 +9,8 @@ namespace SafeCity.Core.Entities
         [EnumMember(Value = "USD")]
         Usd = 840,
         [EnumMember(Value = "EUR")]
-        Euro = 978
+        Euro = 978,
+        [EnumMember(Value = "RUB")]
+        Rub = 643
     }
 }
