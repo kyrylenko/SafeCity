@@ -14,6 +14,9 @@ namespace SafeCity.Mappers
             CreateMap<Project, ProjectDto>()
                 .ForMember(dest => dest.Raised,
                     opt => opt.MapFrom(src => src.Donations.Sum(d => d.Amount)));
+
+            CreateMap<ProjectCreateDto, Project>();
+            //.AfterMap<SetAuditDataAction<ProjectCreateDto, Project>>();
         }
     }
 }
