@@ -10,7 +10,7 @@ using SafeCity.Core;
 namespace SafeCity.Core.Migrations
 {
     [DbContext(typeof(SafeCityContext))]
-    [Migration("20201023202420_Initial")]
+    [Migration("20201024185144_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,9 +64,9 @@ namespace SafeCity.Core.Migrations
                             Id = 1,
                             Amount = 200m,
                             Currency = 980,
-                            DateTime = new DateTime(2020, 10, 23, 23, 24, 19, 934, DateTimeKind.Local).AddTicks(91),
+                            DateTime = new DateTime(2020, 10, 24, 21, 51, 44, 481, DateTimeKind.Local).AddTicks(9980),
                             Email = "kirilenko.pavlo@gmail.com",
-                            ProjectId = 1,
+                            ProjectId = 2,
                             Source = "liqpay",
                             Status = "ok",
                             TransactionId = "12345678"
@@ -76,9 +76,9 @@ namespace SafeCity.Core.Migrations
                             Id = 2,
                             Amount = 140m,
                             Currency = 980,
-                            DateTime = new DateTime(2020, 10, 22, 23, 24, 19, 934, DateTimeKind.Local).AddTicks(2439),
+                            DateTime = new DateTime(2020, 10, 23, 21, 51, 44, 482, DateTimeKind.Local).AddTicks(2660),
                             Email = "emma.kyrylenko@gmail.com",
-                            ProjectId = 1,
+                            ProjectId = 2,
                             Source = "liqpay",
                             Status = "ok",
                             TransactionId = "65432123"
@@ -97,6 +97,9 @@ namespace SafeCity.Core.Migrations
                         .HasMaxLength(1024);
 
                     b.Property<string>("Attachments")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
@@ -137,13 +140,10 @@ namespace SafeCity.Core.Migrations
                     b.Property<int>("State")
                         .HasColumnType("integer");
 
-                    b.Property<string>("SuggestedBy")
-                        .HasColumnType("text");
-
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("UpdatedDate")
+                    b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
@@ -156,7 +156,8 @@ namespace SafeCity.Core.Migrations
                             Id = 1,
                             AddressName = "Lviv, Kopernyka",
                             Attachments = "",
-                            CreatedDate = new DateTime(2020, 10, 21, 23, 24, 19, 930, DateTimeKind.Local).AddTicks(5437),
+                            CreatedBy = "chuck.norris@gmail.com",
+                            CreatedDate = new DateTime(2020, 10, 22, 21, 51, 44, 478, DateTimeKind.Local).AddTicks(5900),
                             Images = "https://lviv.depo.ua/uploads/posts/20190424/754x/nQBX5BSgx0VcY49gVyZyBQz8p7SuwCZlyL2yGusa.jpeg,https://img.depo.ua/745xX/Dec2018/466290.jpg",
                             IsDeleted = false,
                             Lat = 49.836319000000003,
@@ -166,16 +167,15 @@ namespace SafeCity.Core.Migrations
                             Name = "Doors renovation",
                             RequiredAmount = 1200m,
                             ShortDescription = "Doors renovation in the old building",
-                            State = 0,
-                            SuggestedBy = "chuck.norris@gmail.com",
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            State = 0
                         },
                         new
                         {
                             Id = 2,
                             AddressName = "Lviv, Zamarstynivska 79",
                             Attachments = "",
-                            CreatedDate = new DateTime(2020, 10, 21, 23, 24, 19, 932, DateTimeKind.Local).AddTicks(6811),
+                            CreatedBy = "pavlo.kyrylenko@gmail.com",
+                            CreatedDate = new DateTime(2020, 10, 22, 21, 51, 44, 480, DateTimeKind.Local).AddTicks(6728),
                             Images = "https://i.imgur.com/3QtX0ea.jpg,https://i.imgur.com/xrwczlk.png,https://i.imgur.com/a66KMDd.png",
                             IsDeleted = false,
                             Lat = 49.857537999999998,
@@ -185,9 +185,7 @@ namespace SafeCity.Core.Migrations
                             Name = "Платан на Чорновола",
                             RequiredAmount = 5000m,
                             ShortDescription = "Заміна платану на чочноаола",
-                            State = 1,
-                            SuggestedBy = "chuck.norris@gmail.com",
-                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            State = 1
                         });
                 });
 

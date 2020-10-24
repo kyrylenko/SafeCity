@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SafeCity.Core.Entities
 {
-    public class Project
+    public class Project: AuditEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,10 +28,6 @@ namespace SafeCity.Core.Entities
         public double Lon { get; set; }
         public string[] Images { get; set; } = { };
         public string[] Attachments { get; set; } = { };
-        public string SuggestedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string UpdatedBy { get; set; }
-        public DateTime UpdatedDate { get; set; }
         public bool IsDeleted { get; set; }
         public ICollection<Donation> Donations { get; set; } = new List<Donation>();
     }

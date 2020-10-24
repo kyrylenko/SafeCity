@@ -7,10 +7,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20201023200118_Initial.cs" />
     <Compile Remove="Migrations\20201023200118_Initial.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Entities\" />
+    <Compile Remove="Migrations\20201023202420_Initial.cs" />
+    <Compile Remove="Migrations\20201023202420_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20201024184851_Initial.cs" />
+    <Compile Remove="Migrations\20201024184851_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

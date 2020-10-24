@@ -33,7 +33,7 @@ namespace SafeCity.Core
                         "https://img.depo.ua/745xX/Dec2018/466290.jpg"
                     },
                     RequiredAmount = 1200,
-                    SuggestedBy = "chuck.norris@gmail.com",
+                    CreatedBy = "chuck.norris@gmail.com",
                     CreatedDate = DateTime.Now.AddDays(-2)
                 }, new Project()
                 {
@@ -50,7 +50,7 @@ namespace SafeCity.Core
                         "https://i.imgur.com/xrwczlk.png",
                         "https://i.imgur.com/a66KMDd.png"},
                     RequiredAmount = 5000,
-                    SuggestedBy = "chuck.norris@gmail.com",
+                    CreatedBy = "pavlo.kyrylenko@gmail.com",
                     CreatedDate = DateTime.Now.AddDays(-2),
                     State = ProjectState.FundRaising
                 });
@@ -63,7 +63,7 @@ namespace SafeCity.Core
                     Currency = Currency.Uah,
                     DateTime = DateTime.Now,
                     Email = "kirilenko.pavlo@gmail.com",
-                    ProjectId = 1,
+                    ProjectId = 2,
                     Source = "liqpay",
                     Status = "ok",
                     TransactionId = "12345678"
@@ -74,7 +74,7 @@ namespace SafeCity.Core
                     Currency = Currency.Uah,
                     DateTime = DateTime.Now.AddDays(-1),
                     Email = "emma.kyrylenko@gmail.com",
-                    ProjectId = 1,
+                    ProjectId = 2,
                     Source = "liqpay",
                     Status = "ok",
                     TransactionId = "65432123"
