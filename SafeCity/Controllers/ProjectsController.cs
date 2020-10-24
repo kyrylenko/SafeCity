@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using SafeCity.DTOs;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -14,11 +17,15 @@ namespace SafeCity.Controllers
     {
         private readonly ILogger<ProjectsController> _logger;
         private readonly IProjectRepository _projectRepository;
+        private readonly IMapper _mapper;
 
-        public ProjectsController(ILogger<ProjectsController> logger, IProjectRepository projectRepository)
+        public ProjectsController(ILogger<ProjectsController> logger, 
+            IProjectRepository projectRepository,
+            IMapper mapper)
         {
-            _logger = logger;
-            _projectRepository = projectRepository;
+            _logger = logger ?? throw new ArgumentException(nameof(logger));
+            _projectRepository = projectRepository ?? throw new ArgumentException(nameof(projectRepository));
+            _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
         }
 
         [HttpGet]
@@ -26,7 +33,9 @@ namespace SafeCity.Controllers
         {
             var projects = await _projectRepository.GetAllAsync();
 
-            return Ok(projects);
+            var dto = _mapper.Map<IEnumerable<ProjectBaseDto>>(projects);
+
+            return Ok(dto);
         }
 
         [HttpGet("{id:int}", Name = "GetById")]
@@ -39,21 +48,7 @@ namespace SafeCity.Controllers
                 return NotFound();
             }
 
-            var dto = new ProjectDto()
-            {
-                Id = project.Id,
-                Name = project.Name,
-                AddressName = project.AddressName,
-                Logo = project.Logo,
-                ShortDescription = project.ShortDescription,
-                RequiredAmount = project.RequiredAmount,
-                State = project.State,
-                LongDescription = project.LongDescription,
-                Lat = project.Lat,
-                Lon = project.Lon,
-                Images = project.Images,
-                Raised = project.Donations.Sum(d => d.Amount)
-            };
+            var dto = _mapper.Map<ProjectDto>(project);
 
             return Ok(dto);
         }
