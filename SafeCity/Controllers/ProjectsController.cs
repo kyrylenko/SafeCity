@@ -56,7 +56,7 @@ namespace SafeCity.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] ProjectCreateDto project)
         {
-            var maxId = ProjectDataStore.Current.Projects.Max(x => x.Id);
+            var maxId = 1;
             var newProject = new ProjectDto()
             {
                 Id = ++maxId,
@@ -67,9 +67,9 @@ namespace SafeCity.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult Put(int id, [FromBody] ProjectCreateDto project)
+        public async Task<IActionResult> Put(int id, [FromBody] ProjectCreateDto project)
         {
-            var result = ProjectDataStore.Current.Projects.Find(x => x.Id == id);
+            var result = await _projectRepository.GetByIdAsync(id);
 
             if (result == null)
             {
@@ -83,9 +83,9 @@ namespace SafeCity.Controllers
         }
 
         [HttpPatch("{id:int}")]
-        public IActionResult Patch(int id, [FromBody] JsonPatchDocument<ProjectCreateDto> doc)
+        public async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ProjectCreateDto> doc)
         {
-            var result = ProjectDataStore.Current.Projects.Find(x => x.Id == id);
+            var result = await _projectRepository.GetByIdAsync(id);
 
             if (result == null)
             {
@@ -123,9 +123,9 @@ namespace SafeCity.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var result = ProjectDataStore.Current.Projects.Find(x => x.Id == id);
+            var result = await _projectRepository.GetByIdAsync(id);
 
             if (result == null)
             {
