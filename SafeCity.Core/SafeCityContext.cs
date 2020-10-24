@@ -19,7 +19,7 @@ namespace SafeCity.Core
             modelBuilder.Entity<Project>()
                 .HasData(new Project()
                 {
-                    Id = 1,
+                    Id = -1,
                     Name = "Doors renovation",
                     ShortDescription = "Doors renovation in the old building",
                     LongDescription = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
@@ -34,10 +34,10 @@ namespace SafeCity.Core
                     },
                     RequiredAmount = 1200,
                     CreatedBy = "chuck.norris@gmail.com",
-                    CreatedDate = DateTime.Now.AddDays(-2)
+                    CreatedDate = DateTime.Now.AddDays(-2),
                 }, new Project()
                 {
-                    Id = 2,
+                    Id = -2,
                     Name = "Платан на Чорновола",
                     ShortDescription = "Заміна платану на чочноаола",
                     LongDescription = "Думаю, ви пам'ятаєте прекрасні платани, яки ми завдяки спільнокошту посадили на проспекті Чорновола. Торік крайнє від залізничного мосту дерево хтось надломив (скоріш за все - машиною при маневруванні), ми намагалися зафіксувати його брусками, воно зрослося і так прожило ще рік, але одного з літніх буревіїв таки не витримало. Тепер там порожня лунка і на це місце проситься нове дерево.",
@@ -58,23 +58,23 @@ namespace SafeCity.Core
             modelBuilder.Entity<Donation>()
                 .HasData(new Donation()
                 {
-                    Id = 1,
+                    Id = -3,
                     Amount = 200,
                     Currency = Currency.Uah,
                     DateTime = DateTime.Now,
                     Email = "kirilenko.pavlo@gmail.com",
-                    ProjectId = 2,
+                    ProjectId = -2,
                     Source = "liqpay",
                     Status = "ok",
                     TransactionId = "12345678"
                 }, new Donation()
                 {
-                    Id = 2,
+                    Id = -4,
                     Amount = 140,
                     Currency = Currency.Uah,
                     DateTime = DateTime.Now.AddDays(-1),
                     Email = "emma.kyrylenko@gmail.com",
-                    ProjectId = 2,
+                    ProjectId = -2,
                     Source = "liqpay",
                     Status = "ok",
                     TransactionId = "65432123"

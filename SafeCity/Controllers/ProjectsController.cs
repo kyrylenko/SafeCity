@@ -7,6 +7,7 @@ using SafeCity.DTOs;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SafeCity.Core.Entities;
 using SafeCity.Core.Repositories;
 
 namespace SafeCity.Controllers
@@ -54,16 +55,14 @@ namespace SafeCity.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] ProjectCreateDto project)
+        public async Task<IActionResult> Create([FromBody] ProjectCreateDto project)
         {
-            var maxId = 1;
-            var newProject = new ProjectDto()
-            {
-                Id = ++maxId,
-                Name = project.Name
-            };
+            var entity = _mapper.Map<Project>(project);
+            
+            _projectRepository.CreateProjectAsync(entity);
+            await _projectRepository.SaveAsync();
 
-            return CreatedAtRoute("GetById", new { newProject.Id }, newProject);
+            return CreatedAtRoute("GetById", new { entity.Id }, entity);
         }
 
         [HttpPut("{id:int}")]

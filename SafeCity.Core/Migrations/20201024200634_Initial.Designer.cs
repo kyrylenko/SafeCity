@@ -10,7 +10,7 @@ using SafeCity.Core;
 namespace SafeCity.Core.Migrations
 {
     [DbContext(typeof(SafeCityContext))]
-    [Migration("20201024185144_Initial")]
+    [Migration("20201024200634_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,24 +61,24 @@ namespace SafeCity.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = -3,
                             Amount = 200m,
                             Currency = 980,
-                            DateTime = new DateTime(2020, 10, 24, 21, 51, 44, 481, DateTimeKind.Local).AddTicks(9980),
+                            DateTime = new DateTime(2020, 10, 24, 23, 6, 34, 58, DateTimeKind.Local).AddTicks(41),
                             Email = "kirilenko.pavlo@gmail.com",
-                            ProjectId = 2,
+                            ProjectId = -2,
                             Source = "liqpay",
                             Status = "ok",
                             TransactionId = "12345678"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = -4,
                             Amount = 140m,
                             Currency = 980,
-                            DateTime = new DateTime(2020, 10, 23, 21, 51, 44, 482, DateTimeKind.Local).AddTicks(2660),
+                            DateTime = new DateTime(2020, 10, 23, 23, 6, 34, 58, DateTimeKind.Local).AddTicks(2465),
                             Email = "emma.kyrylenko@gmail.com",
-                            ProjectId = 2,
+                            ProjectId = -2,
                             Source = "liqpay",
                             Status = "ok",
                             TransactionId = "65432123"
@@ -153,11 +153,11 @@ namespace SafeCity.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = -1,
                             AddressName = "Lviv, Kopernyka",
                             Attachments = "",
                             CreatedBy = "chuck.norris@gmail.com",
-                            CreatedDate = new DateTime(2020, 10, 22, 21, 51, 44, 478, DateTimeKind.Local).AddTicks(5900),
+                            CreatedDate = new DateTime(2020, 10, 22, 23, 6, 34, 54, DateTimeKind.Local).AddTicks(6079),
                             Images = "https://lviv.depo.ua/uploads/posts/20190424/754x/nQBX5BSgx0VcY49gVyZyBQz8p7SuwCZlyL2yGusa.jpeg,https://img.depo.ua/745xX/Dec2018/466290.jpg",
                             IsDeleted = false,
                             Lat = 49.836319000000003,
@@ -171,11 +171,11 @@ namespace SafeCity.Core.Migrations
                         },
                         new
                         {
-                            Id = 2,
+                            Id = -2,
                             AddressName = "Lviv, Zamarstynivska 79",
                             Attachments = "",
                             CreatedBy = "pavlo.kyrylenko@gmail.com",
-                            CreatedDate = new DateTime(2020, 10, 22, 21, 51, 44, 480, DateTimeKind.Local).AddTicks(6728),
+                            CreatedDate = new DateTime(2020, 10, 22, 23, 6, 34, 56, DateTimeKind.Local).AddTicks(6915),
                             Images = "https://i.imgur.com/3QtX0ea.jpg,https://i.imgur.com/xrwczlk.png,https://i.imgur.com/a66KMDd.png",
                             IsDeleted = false,
                             Lat = 49.857537999999998,

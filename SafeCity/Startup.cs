@@ -42,6 +42,8 @@ namespace SafeCity
                 configuration.RootPath = "ClientApp/build";
             });
 
+            services.AddHttpContextAccessor();
+
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<ILiqPayService>(x =>
                 new LiqPayService(Configuration["LiqPay:PublicKey"], Configuration["LiqPay:PrivateKey"]));

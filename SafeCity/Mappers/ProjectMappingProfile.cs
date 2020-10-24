@@ -2,6 +2,7 @@
 using AutoMapper;
 using SafeCity.Core.Entities;
 using SafeCity.DTOs;
+using SafeCity.Mappers.MappingActions;
 
 namespace SafeCity.Mappers
 {
@@ -15,8 +16,8 @@ namespace SafeCity.Mappers
                 .ForMember(dest => dest.Raised,
                     opt => opt.MapFrom(src => src.Donations.Sum(d => d.Amount)));
 
-            CreateMap<ProjectCreateDto, Project>();
-            //.AfterMap<SetAuditDataAction<ProjectCreateDto, Project>>();
+            CreateMap<ProjectCreateDto, Project>()
+                .AfterMap<SetAuditDataActionCreate<ProjectCreateDto, Project>>();
         }
     }
 }

@@ -36,5 +36,16 @@ namespace SafeCity.Core.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
         }
+
+        public async void CreateProjectAsync(Project project)
+        {
+            await _context.Projects.AddAsync(project);
+        }
+
+        public async Task<bool> SaveAsync()
+        {
+            var result = await _context.SaveChangesAsync();
+            return result >= 0;
+        }
     }
 }

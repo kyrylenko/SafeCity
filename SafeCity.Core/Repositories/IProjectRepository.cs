@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SafeCity.Core.Entities;
 
@@ -10,5 +8,7 @@ namespace SafeCity.Core.Repositories
     {
         Task<IEnumerable<Project>> GetAllAsync();
         Task<Project> GetByIdAsync(int id, bool includeDonations = true);
+        void CreateProjectAsync(Project project);
+        Task<bool> SaveAsync();
     }
 }
