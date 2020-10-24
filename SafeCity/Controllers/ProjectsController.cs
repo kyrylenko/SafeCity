@@ -42,7 +42,7 @@ namespace SafeCity.Controllers
         [HttpGet("{id:int}", Name = "GetById")]
         public async Task<IActionResult> GetById(int id)
         {
-            var project = await _projectRepository.GetByIdAsync(id);
+            var project = await _projectRepository.GetByIdAsync(id, true);
 
             if (project == null)
             {
@@ -62,21 +62,25 @@ namespace SafeCity.Controllers
             _projectRepository.CreateProjectAsync(entity);
             await _projectRepository.SaveAsync();
 
-            return CreatedAtRoute("GetById", new { entity.Id }, entity);
+            var dto = _mapper.Map<ProjectDto>(entity);
+
+            return CreatedAtRoute("GetById", new { dto.Id }, dto);
         }
 
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(int id, [FromBody] ProjectCreateDto project)
         {
-            var result = await _projectRepository.GetByIdAsync(id);
+            var actualProject = await _projectRepository.GetByIdAsync(id, false);
 
-            if (result == null)
+            if (actualProject == null)
             {
                 _logger.LogInformation($"Put project. Project with id={id} was not found");
                 return NotFound();
             }
 
-            //Update in database here
+            _mapper.Map(project, actualProject);
+
+            await _projectRepository.SaveAsync();
 
             return NoContent();
         }
@@ -84,7 +88,7 @@ namespace SafeCity.Controllers
         [HttpPatch("{id:int}")]
         public async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ProjectCreateDto> doc)
         {
-            var result = await _projectRepository.GetByIdAsync(id);
+            var result = await _projectRepository.GetByIdAsync(id, false);
 
             if (result == null)
             {
@@ -124,7 +128,7 @@ namespace SafeCity.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _projectRepository.GetByIdAsync(id);
+            var result = await _projectRepository.GetByIdAsync(id, false);
 
             if (result == null)
             {

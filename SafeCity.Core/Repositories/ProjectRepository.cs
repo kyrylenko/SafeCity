@@ -33,13 +33,26 @@ namespace SafeCity.Core.Repositories
             }
 
             return await _context.Projects
-                .AsNoTracking()
+                //.AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
         }
 
         public async void CreateProjectAsync(Project project)
         {
             await _context.Projects.AddAsync(project);
+        }
+
+        public void UpdateProjectAsync(int id, Project project)
+        {
+            //It is empty by design. 
+            //It's enough to call in the controller:
+
+            //actualProject = _projectRepository.GetByIdAsync(id, false);
+            //_mapper.Map(project, actualProject);
+            //await _projectRepository.SaveAsync();
+
+            //BUT it is required to NOT use .AsNoTracking() in the GetByIdAsync() to make sure actualProject is tracked by EF
+            //So, this method still should be present, because if use some different implementation of IProjectRepository (without EF), it will not work
         }
 
         public async Task<bool> SaveAsync()
