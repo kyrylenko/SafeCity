@@ -1,9 +1,10 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using SafeCity.DTOs;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SafeCity.Core;
+using SafeCity.Core.Repositories;
 
 namespace SafeCity.Controllers
 {
@@ -12,55 +13,46 @@ namespace SafeCity.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly ILogger<ProjectsController> _logger;
-        private readonly SafeCityContext _ctx;
-        
-        public ProjectsController(ILogger<ProjectsController> logger, SafeCityContext ctx)
+        private readonly IProjectRepository _projectRepository;
+
+        public ProjectsController(ILogger<ProjectsController> logger, IProjectRepository projectRepository)
         {
             _logger = logger;
-            _ctx = ctx;
+            _projectRepository = projectRepository;
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var projects = _ctx.Projects.ToList()
-                .Select(x=>new ProjectBaseDto()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    AddressName = x.AddressName,
-                    Logo = x.Logo,
-                    ShortDescription = x.ShortDescription,
-                    RequiredAmount = x.RequiredAmount,
-                    State = x.State
-                });
+            var projects = await _projectRepository.GetAllAsync();
 
             return Ok(projects);
         }
 
         [HttpGet("{id:int}", Name = "GetById")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var x = _ctx.Projects.Find(id);
-            if (x == null)
+            var project = await _projectRepository.GetByIdAsync(id);
+
+            if (project == null)
             {
                 return NotFound();
             }
 
             var dto = new ProjectDto()
             {
-                Id = x.Id,
-                Name = x.Name,
-                AddressName = x.AddressName,
-                Logo = x.Logo,
-                ShortDescription = x.ShortDescription,
-                RequiredAmount = x.RequiredAmount,
-                State = x.State,
-                LongDescription = x.LongDescription,
-                Lat = x.Lat,
-                Lon = x.Lon,
-                Images = x.Images,
-                Raised = x.Donations.Sum(d => d.Amount)
+                Id = project.Id,
+                Name = project.Name,
+                AddressName = project.AddressName,
+                Logo = project.Logo,
+                ShortDescription = project.ShortDescription,
+                RequiredAmount = project.RequiredAmount,
+                State = project.State,
+                LongDescription = project.LongDescription,
+                Lat = project.Lat,
+                Lon = project.Lon,
+                Images = project.Images,
+                Raised = project.Donations.Sum(d => d.Amount)
             };
 
             return Ok(dto);

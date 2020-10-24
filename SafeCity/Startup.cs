@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SafeCity.Core;
+using SafeCity.Core.Repositories;
 using SafeCity.Services;
 
 namespace SafeCity
@@ -39,6 +40,8 @@ namespace SafeCity
             {
                 configuration.RootPath = "ClientApp/build";
             });
+
+            services.AddScoped<IProjectRepository, ProjectRepository>();
 
             services.AddScoped<ILiqPayService>(x =>
                 new LiqPayService(Configuration["LiqPay:PublicKey"], Configuration["LiqPay:PrivateKey"]));
