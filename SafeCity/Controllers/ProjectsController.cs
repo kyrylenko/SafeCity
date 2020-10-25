@@ -79,7 +79,7 @@ namespace SafeCity.Controllers
             }
 
             _mapper.Map(project, actualProject);
-
+            //_projectRepository.UpdateProjectAsync(id, entity);
             await _projectRepository.SaveAsync();
 
             return NoContent();
