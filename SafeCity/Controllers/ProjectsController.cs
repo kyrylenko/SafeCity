@@ -1,8 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using SafeCity.DTOs;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SafeCity.Core.Entities;
+using SafeCity.Core.Repositories;
 
 namespace SafeCity.Controllers
 {
@@ -11,105 +17,117 @@ namespace SafeCity.Controllers
     public class ProjectsController : ControllerBase
     {
         private readonly ILogger<ProjectsController> _logger;
-        public ProjectsController(ILogger<ProjectsController> logger)
+        private readonly IProjectRepository _projectRepository;
+        private readonly IMapper _mapper;
+
+        public ProjectsController(ILogger<ProjectsController> logger, 
+            IProjectRepository projectRepository,
+            IMapper mapper)
         {
-            _logger = logger;
+            _logger = logger ?? throw new ArgumentException(nameof(logger));
+            _projectRepository = projectRepository ?? throw new ArgumentException(nameof(projectRepository));
+            _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(ProjectDataStore.Current.Projects);
+            var projects = await _projectRepository.GetAllAsync();
+
+            var dto = _mapper.Map<IEnumerable<ProjectBaseDto>>(projects);
+
+            return Ok(dto);
         }
 
         [HttpGet("{id:int}", Name = "GetById")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var result = ProjectDataStore.Current.Projects.Find(x => x.Id == id);
+            var project = await _projectRepository.GetByIdAsync(id, true);
 
-            return result != null ? (ActionResult)Ok(result) : NotFound();
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            var dto = _mapper.Map<ProjectDto>(project);
+
+            return Ok(dto);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] ProjectCreateDto project)
+        public async Task<IActionResult> Create([FromBody] ProjectCreateDto project)
         {
-            var maxId = ProjectDataStore.Current.Projects.Max(x => x.Id);
-            var newProject = new ProjectDto()
-            {
-                Id = ++maxId,
-                Name = project.Name
-            };
+            var entity = _mapper.Map<Project>(project);
+            
+            _projectRepository.CreateProjectAsync(entity);
+            await _projectRepository.SaveAsync();
 
-            return CreatedAtRoute("GetById", new { newProject.Id }, newProject);
+            var dto = _mapper.Map<ProjectDto>(entity);
+
+            return CreatedAtRoute("GetById", new { dto.Id }, dto);
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult Put(int id, [FromBody] ProjectCreateDto project)
+        public async Task<IActionResult> Put(int id, [FromBody] ProjectCreateDto project)
         {
-            var result = ProjectDataStore.Current.Projects.Find(x => x.Id == id);
+            var actualProject = await _projectRepository.GetByIdAsync(id, false);
 
-            if (result == null)
+            if (actualProject == null)
             {
                 _logger.LogInformation($"Put project. Project with id={id} was not found");
                 return NotFound();
             }
 
-            //Update in database here
+            _mapper.Map(project, actualProject);
+            //_projectRepository.UpdateProjectAsync(id, entity);
+            await _projectRepository.SaveAsync();
 
             return NoContent();
         }
 
         [HttpPatch("{id:int}")]
-        public IActionResult Patch(int id, [FromBody] JsonPatchDocument<ProjectCreateDto> doc)
+        public async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ProjectCreateDto> patchDoc)
         {
-            var result = ProjectDataStore.Current.Projects.Find(x => x.Id == id);
+            var actualProject = await _projectRepository.GetByIdAsync(id, false);
 
-            if (result == null)
+            if (actualProject == null)
             {
                 return NotFound();
             }
 
-            var projectToPatch = new ProjectCreateDto()
-            {
-                Name = result.Name,
-                AddressName = result.AddressName,
-                ShortDescription = result.ShortDescription,
-                LongDescription = result.LongDescription,
-                Logo = result.Logo,
-                Lat = result.Lat,
-                Lon = result.Lon,
-                Images = result.Images,
-                RequiredAmount = result.RequiredAmount,
-            };
+            var projectDtoToPatch = _mapper.Map<ProjectCreateDto>(actualProject);
 
-            doc.ApplyTo(projectToPatch, ModelState);
+            patchDoc.ApplyTo(projectDtoToPatch, ModelState);
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (!TryValidateModel(projectToPatch))
+            if (!TryValidateModel(projectDtoToPatch))
             {
                 return BadRequest(ModelState);
             }
 
-            //Update in database here
+            _mapper.Map(projectDtoToPatch, actualProject);
+            //_projectRepository.UpdateProjectAsync(id, entity);
+            await _projectRepository.SaveAsync();
 
             return NoContent();
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var result = ProjectDataStore.Current.Projects.Find(x => x.Id == id);
+            var actualProject = await _projectRepository.GetByIdAsync(id, false);
 
-            if (result == null)
+            if (actualProject == null)
             {
                 return NotFound();
             }
 
-            //Delete from database here
+            actualProject.IsDeleted = true;
+            await _projectRepository.SaveAsync();
 
             return NoContent();
         }

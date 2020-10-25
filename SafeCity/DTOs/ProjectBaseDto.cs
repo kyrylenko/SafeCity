@@ -11,6 +11,5 @@ namespace SafeCity.DTOs
         public string Logo { get; set; }
         public ProjectState State { get; set; } = ProjectState.Suggested;
         public decimal RequiredAmount { get; set; }
-        public decimal Raised { get; set; }
     }
 }
