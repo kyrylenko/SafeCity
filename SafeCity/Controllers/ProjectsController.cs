@@ -86,41 +86,32 @@ namespace SafeCity.Controllers
         }
 
         [HttpPatch("{id:int}")]
-        public async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ProjectCreateDto> doc)
+        public async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ProjectCreateDto> patchDoc)
         {
-            var result = await _projectRepository.GetByIdAsync(id, false);
+            var actualProject = await _projectRepository.GetByIdAsync(id, false);
 
-            if (result == null)
+            if (actualProject == null)
             {
                 return NotFound();
             }
 
-            var projectToPatch = new ProjectCreateDto()
-            {
-                Name = result.Name,
-                AddressName = result.AddressName,
-                ShortDescription = result.ShortDescription,
-                LongDescription = result.LongDescription,
-                Logo = result.Logo,
-                Lat = result.Lat,
-                Lon = result.Lon,
-                Images = result.Images,
-                RequiredAmount = result.RequiredAmount,
-            };
+            var projectDtoToPatch = _mapper.Map<ProjectCreateDto>(actualProject);
 
-            doc.ApplyTo(projectToPatch, ModelState);
+            patchDoc.ApplyTo(projectDtoToPatch, ModelState);
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (!TryValidateModel(projectToPatch))
+            if (!TryValidateModel(projectDtoToPatch))
             {
                 return BadRequest(ModelState);
             }
 
-            //Update in database here
+            _mapper.Map(projectDtoToPatch, actualProject);
+            //_projectRepository.UpdateProjectAsync(id, entity);
+            await _projectRepository.SaveAsync();
 
             return NoContent();
         }
