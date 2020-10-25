@@ -119,14 +119,15 @@ namespace SafeCity.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _projectRepository.GetByIdAsync(id, false);
+            var actualProject = await _projectRepository.GetByIdAsync(id, false);
 
-            if (result == null)
+            if (actualProject == null)
             {
                 return NotFound();
             }
 
-            //Delete from database here
+            actualProject.IsDeleted = true;
+            await _projectRepository.SaveAsync();
 
             return NoContent();
         }
