@@ -6,7 +6,7 @@ function Layout(props: any) {
         <>
             <header>
                 <nav className='navbar fixed-top navbar-expand-md navbar-light bg-yellow'>
-                    <NavLink to='/' className='navbar-brand' >Safe city </NavLink>
+                    <NavLink to='/' className='navbar-brand' >Safe city fund</NavLink>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
