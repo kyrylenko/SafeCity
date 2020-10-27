@@ -1,32 +1,32 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
 
 function Layout(props: any) {
     return (
         <>
             <header>
-                <nav className='navbar fixed-top navbar-expand-md navbar-light bg-yellow'>
-                    <NavLink to='/' className='navbar-brand' >Safe city fund</NavLink>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className='collapse navbar-collapse' id='navbarContent'>
-                        <ul className='navbar-nav mr-auto'>
+                <Navbar bg='yellow' expand='md' className='fixed-top'>
+                    <Navbar.Brand as={NavLink} to='/'>Safe test fund</Navbar.Brand>
+                    <Navbar.Toggle aria-controls='basic-navbar-nav' />
+                    <Navbar.Collapse id='basic-navbar-nav'>
+                        <Nav className='mr-auto'>
                             <li className='nav-item mx-3'>
-                                <NavLink to='/projects' className='nav-link'>Projects</NavLink>
+                                <Nav.Link as={NavLink} to='/projects'>Projects</Nav.Link>
                             </li>
                             <li className='nav-item mx-3'>
-                                <NavLink to='/experts' className='nav-link'>Experts</NavLink>
+                                <Nav.Link as={NavLink} to='/experts'>Experts</Nav.Link>
                             </li>
                             <li className='nav-item mx-3'>
-                                <NavLink to='/report' className='nav-link'>Report</NavLink>
+                                <Nav.Link as={NavLink} to='/report'>Report</Nav.Link>
                             </li>
                             <li className='nav-item mx-3'>
-                                <NavLink to='/about' className='nav-link'>About</NavLink>
+                                <Nav.Link as={NavLink} to='/about'>About</Nav.Link>
                             </li>
-                        </ul>
-                    </div>
-                </nav>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
             </header>
             <main>
                 {props.children}
