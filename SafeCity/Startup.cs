@@ -45,6 +45,8 @@ namespace SafeCity
             services.AddHttpContextAccessor();
 
             services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IDonationRepository, DonationRepository>();
+            
             services.AddScoped<ILiqPayService>(x =>
                 new LiqPayService(Configuration["LiqPay:PublicKey"], Configuration["LiqPay:PrivateKey"]));
 
