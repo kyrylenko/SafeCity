@@ -36,14 +36,18 @@ namespace SafeCity.Controllers
 
             var result = _liqPayService.GenerateDataAndSignature(request);
 
+            //TODO: store Signature & OrderId in ASP.NET Session (or DB?) to validate it later in /payment-status action
+
             return Ok(result);
         }
 
         [HttpPost("payment-status")]
         public IActionResult PaymentStatus([FromForm] string data, [FromForm] string signature)
         {
+            //TODO: validate Signature - compare with the one stored in temporary storage
+            var liqPayResponse = _liqPayService.DecodeData(data);
 
-            return Ok();
+            return NoContent();
         }
     }
 }

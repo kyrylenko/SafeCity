@@ -6,6 +6,6 @@ namespace SafeCity.Services
     {
         DataSignatureResponse GenerateDataAndSignature(LiqPayRequest requestParams);
 
-        LiqPayRequest DecodeData(string data);
+        LiqPayResponse DecodeData(string data);
     }
 }
