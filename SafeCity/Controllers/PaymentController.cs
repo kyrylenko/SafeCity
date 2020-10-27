@@ -40,10 +40,10 @@ namespace SafeCity.Controllers
         }
 
         [HttpPost("payment-status")]
-        public IActionResult PaymentStatus(PaymentResponseDto response)
+        public IActionResult PaymentStatus([FromForm] string data, [FromForm] string signature)
         {
 
-            return Ok(response);
+            return Ok();
         }
     }
 }

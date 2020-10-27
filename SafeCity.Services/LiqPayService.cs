@@ -40,6 +40,15 @@ namespace SafeCity.Services
             };
         }
 
+        public LiqPayRequest DecodeData(string data)
+        {
+            var jsonString = data.DecodeBase64();
+
+            var account = JsonConvert.DeserializeObject<LiqPayRequest>(jsonString);
+
+            return account;
+        }
+
         public string StrToSign(string str) => str.SHA1Hash().ToBase64String();
 
         public string CreateSignature(string base64EncodedData) => StrToSign(_privateKey + base64EncodedData + _privateKey);
