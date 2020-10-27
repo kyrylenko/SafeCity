@@ -22,6 +22,7 @@ namespace SafeCity.Core.Entities
         [MaxLength(256)]
         public string Logo { get; set; }
         public ProjectState State { get; set; } = ProjectState.Suggested;
+        [Column(TypeName = "decimal(18, 2)")]
         [Range(typeof(decimal), "0", "10000000")]
         public decimal RequiredAmount { get; set; }
         public double Lat { get; set; }
