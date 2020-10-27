@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using SafeCity.DTOs;
 using SafeCity.Services;
@@ -51,7 +52,7 @@ namespace SafeCity.Controllers
         }
 
         [HttpPost("payment-status")]
-        public IActionResult PaymentStatus([FromForm] string data, [FromForm] string signature)
+        public async Task<IActionResult> PaymentStatus([FromForm] string data, [FromForm] string signature)
         {
             //TODO: validate Signature - compare with the one stored in temporary storage
             var liqPayResponse = _liqPayService.DecodeData(data);
@@ -59,6 +60,7 @@ namespace SafeCity.Controllers
             var donation = _mapper.Map<Donation>(liqPayResponse);
 
             _donationRepository.CreateDonation(donation);
+            await _donationRepository.SaveAsync();
 
             return NoContent();
         }
