@@ -14,6 +14,7 @@ namespace SafeCity.Core.Entities
         public string Id { get; set; }
         public int ProjectId { get; set; }
         public string Description { get; set; }
+        [Range(typeof(decimal), "0", "10000000")]
         public decimal Amount { get; set; }
         public string Email { get; set; }
         public Currency Currency { get; set; } = Currency.Uah;
@@ -27,6 +28,7 @@ namespace SafeCity.Core.Entities
         /// External payment status, e.g. "success"
         /// </summary>
         public PaymentAction Action { get; set; }
+        [Range(typeof(decimal), "0", "10000000")]
         public decimal ReceiverCommission { get; set; }
         public string Ip { get; set; }
         public string Status { get; set; }
