@@ -10,7 +10,7 @@ using SafeCity.Core;
 namespace SafeCity.Core.Migrations
 {
     [DbContext(typeof(SafeCityContext))]
-    [Migration("20201024200634_Initial")]
+    [Migration("20201027120910_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,10 +23,11 @@ namespace SafeCity.Core.Migrations
 
             modelBuilder.Entity("SafeCity.Core.Entities.Donation", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Action")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
@@ -37,11 +38,20 @@ namespace SafeCity.Core.Migrations
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
                     b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Ip")
                         .HasColumnType("text");
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
+
+                    b.Property<decimal>("ReceiverCommission")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("Source")
                         .HasColumnType("text");
@@ -61,27 +71,35 @@ namespace SafeCity.Core.Migrations
                     b.HasData(
                         new
                         {
-                            Id = -3,
+                            Id = "637393849118004257-kirilenko.pavlo@gmail.com--2",
+                            Action = 1,
                             Amount = 200m,
                             Currency = 980,
-                            DateTime = new DateTime(2020, 10, 24, 23, 6, 34, 58, DateTimeKind.Local).AddTicks(41),
+                            DateTime = new DateTime(2020, 10, 27, 14, 9, 9, 852, DateTimeKind.Local).AddTicks(520),
+                            Description = "Project: Платан на Чорновола",
                             Email = "kirilenko.pavlo@gmail.com",
+                            Ip = "92.253.252.0",
                             ProjectId = -2,
+                            ReceiverCommission = 0m,
                             Source = "liqpay",
-                            Status = "ok",
-                            TransactionId = "12345678"
+                            Status = "success",
+                            TransactionId = "1460920565"
                         },
                         new
                         {
-                            Id = -4,
+                            Id = "637393849118001254-emma.kyrylenko@gmail.com--2",
+                            Action = 1,
                             Amount = 140m,
                             Currency = 980,
-                            DateTime = new DateTime(2020, 10, 23, 23, 6, 34, 58, DateTimeKind.Local).AddTicks(2465),
+                            DateTime = new DateTime(2020, 10, 26, 14, 9, 9, 852, DateTimeKind.Local).AddTicks(3172),
+                            Description = "Project: Платан на Чорновола",
                             Email = "emma.kyrylenko@gmail.com",
+                            Ip = "92.253.252.0",
                             ProjectId = -2,
+                            ReceiverCommission = 0m,
                             Source = "liqpay",
-                            Status = "ok",
-                            TransactionId = "65432123"
+                            Status = "success",
+                            TransactionId = "1460908734"
                         });
                 });
 
@@ -157,7 +175,7 @@ namespace SafeCity.Core.Migrations
                             AddressName = "Lviv, Kopernyka",
                             Attachments = "",
                             CreatedBy = "chuck.norris@gmail.com",
-                            CreatedDate = new DateTime(2020, 10, 22, 23, 6, 34, 54, DateTimeKind.Local).AddTicks(6079),
+                            CreatedDate = new DateTime(2020, 10, 25, 14, 9, 9, 848, DateTimeKind.Local).AddTicks(6693),
                             Images = "https://lviv.depo.ua/uploads/posts/20190424/754x/nQBX5BSgx0VcY49gVyZyBQz8p7SuwCZlyL2yGusa.jpeg,https://img.depo.ua/745xX/Dec2018/466290.jpg",
                             IsDeleted = false,
                             Lat = 49.836319000000003,
@@ -175,7 +193,7 @@ namespace SafeCity.Core.Migrations
                             AddressName = "Lviv, Zamarstynivska 79",
                             Attachments = "",
                             CreatedBy = "pavlo.kyrylenko@gmail.com",
-                            CreatedDate = new DateTime(2020, 10, 22, 23, 6, 34, 56, DateTimeKind.Local).AddTicks(6915),
+                            CreatedDate = new DateTime(2020, 10, 25, 14, 9, 9, 850, DateTimeKind.Local).AddTicks(7542),
                             Images = "https://i.imgur.com/3QtX0ea.jpg,https://i.imgur.com/xrwczlk.png,https://i.imgur.com/a66KMDd.png",
                             IsDeleted = false,
                             Lat = 49.857537999999998,

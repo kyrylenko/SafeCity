@@ -4,7 +4,7 @@ namespace SafeCity.DTOs
 {
     public class DonationDto
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public int ProjectId { get; set; }
         public decimal Amount { get; set; }
         public string Currency { get; set; }

@@ -1,8 +1,10 @@
 ﻿using System;
+using AutoMapper;
 using SafeCity.DTOs;
 using SafeCity.Services;
 using SafeCity.Services.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using SafeCity.Core.Entities;
 
 namespace SafeCity.Controllers
 {
@@ -11,9 +13,11 @@ namespace SafeCity.Controllers
     public class PaymentController : ControllerBase
     {
         private readonly ILiqPayService _liqPayService;
-        public PaymentController(ILiqPayService liqPayService)
+        private readonly IMapper _mapper;
+        public PaymentController(ILiqPayService liqPayService, IMapper mapper)
         {
             _liqPayService = liqPayService;
+            _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
         }
         /// <summary>
         /// Generate Data and Signature
@@ -47,6 +51,8 @@ namespace SafeCity.Controllers
             //TODO: validate Signature - compare with the one stored in temporary storage
             var liqPayResponse = _liqPayService.DecodeData(data);
 
+            var donation = _mapper.Map<Donation>(liqPayResponse);
+            //persist donation to DB
             return NoContent();
         }
     }

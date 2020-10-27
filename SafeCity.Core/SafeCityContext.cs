@@ -58,26 +58,30 @@ namespace SafeCity.Core
             modelBuilder.Entity<Donation>()
                 .HasData(new Donation()
                 {
-                    Id = -3,
+                    Id = "637393849118004257-kirilenko.pavlo@gmail.com--2",
+                    Description = "Project: Платан на Чорновола",
                     Amount = 200,
                     Currency = Currency.Uah,
                     DateTime = DateTime.Now,
                     Email = "kirilenko.pavlo@gmail.com",
                     ProjectId = -2,
-                    Source = "liqpay",
-                    Status = "ok",
-                    TransactionId = "12345678"
+                    Status = "success",
+                    TransactionId = "1460920565",
+                    Action = PaymentAction.Pay,
+                    Ip = "92.253.252.0"
                 }, new Donation()
                 {
-                    Id = -4,
+                    Id = "637393849118001254-emma.kyrylenko@gmail.com--2",
+                    Description = "Project: Платан на Чорновола",
                     Amount = 140,
                     Currency = Currency.Uah,
                     DateTime = DateTime.Now.AddDays(-1),
                     Email = "emma.kyrylenko@gmail.com",
                     ProjectId = -2,
-                    Source = "liqpay",
-                    Status = "ok",
-                    TransactionId = "65432123"
+                    Status = "success",
+                    TransactionId = "1460908734",
+                    Action = PaymentAction.Pay,
+                    Ip = "92.253.252.0"
                 });
 
             modelBuilder.Entity<Project>()
