@@ -1,7 +1,7 @@
 import React from 'react';
 
 const About = (props: any) => {
-    return <div>About</div>
+    return <h2 style={{ textAlign: "center" }}>About page goes here</h2>
 }
 
 export default About;
