@@ -31,7 +31,18 @@ function Layout(props: any) {
             <main>
                 {props.children}
             </main>
-            <footer>Footer</footer>
+            <footer className='mt-auto'>
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col-md-4'>
+                            email: <a href='mailto:kirilenko.pavlo@gmail.com'>kirilenko.pavlo@gmail.com</a>
+                            <br />
+                            cell: <a href='tel:+380959242349'>+3 8095 9242349</a>
+                        </div>
+                        <div className='col-md-8'></div>
+                    </div>
+                </div>
+            </footer>
         </>
     );
 }
