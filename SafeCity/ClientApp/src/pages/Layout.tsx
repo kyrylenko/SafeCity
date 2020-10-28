@@ -8,7 +8,7 @@ function Layout(props: any) {
         <>
             <header>
                 <Navbar bg='yellow' expand='md' className='fixed-top'>
-                    <Navbar.Brand as={NavLink} to='/'>Safe test fund</Navbar.Brand>
+                    <Navbar.Brand as={NavLink} to='/'>Safe city fund</Navbar.Brand>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />
                     <Navbar.Collapse id='basic-navbar-nav'>
                         <Nav className='mr-auto'>

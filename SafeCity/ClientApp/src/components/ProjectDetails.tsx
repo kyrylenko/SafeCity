@@ -28,7 +28,7 @@ const ProjectDetails = (props: { project: IProject }) => {
             <div className='row'>
                 <div className='col-lg-7'>
                     <div className='opened-project-wrapper'>
-                        <Carousel slide={false}>
+                        <Carousel slide={true}>
                             {project.images.map((x, i) => <Carousel.Item key={x}>
                                 <img src={x} className={`d-block w-100`} alt={x}></img>
                             </Carousel.Item>)}
