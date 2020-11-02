@@ -15,12 +15,12 @@ const Home = () => {
                         <div className='col-lg-6'>
                             <h2>Гарний слоган про міську інфраструктуру</h2>
                             <div style={{ paddingRight: '75px' }}>
-                                <p className='typograph_me'>Щодня в Українї у великих і малих містах знищують історичну спадщину.</p>
+                                <p className='typograph_me'>Щодня в Україні у великих і малих містах знищують історичну спадщину.</p>
                                 <p className='typograph_me'>Цього ніхто не помічає, все вже звикли, і нікого не обурює, що зносять пам'ятники архітектури, що в будівлі XIX століття вставляють металеві двері і пластикові вікна, що старі ліхтарі та огорожі відправляють на переплавку. Так тривати не може. Ми відкрили Фонд Увага, щоб цю ситуацію змінити.</p>
                             </div>
 
                             <div className='buttons-row'>
-                                <a href='/#section-projects' className='btn btn-default'>Active projects</a>
+                                <a href='/#section-projects' className='btn btn-default'>Активні проекти</a>
                             </div>
                         </div>
                     </div>

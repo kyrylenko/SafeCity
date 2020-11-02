@@ -5,17 +5,17 @@ const calcPercentage = (raised: number, total: number): number => raised / total
 const ProgressPanel = ({ total, raised, currency = 'uah' }: { total: number, raised: number, currency?: string }) => {
     return <div className='progress-panel'>
         <div>
-            <strong>Fundraising</strong>
+            <strong>Збір коштів</strong>
         </div>
         <div className='progress-bar'>
             <div className='progress-overlap' style={{ width: `${calcPercentage(raised, total)}%` }}></div>
         </div>
         <div className='progress-numbers'>
             <div className='progress-left'>
-                Raised:<span>{raised} {currency}.</span>
+                Зібрано:<span>{raised} {currency}.</span>
             </div>
             <div className='progress-right'>
-                Total need:<span>{total} {currency}.</span>
+                Усього потрібно:<span>{total} {currency}.</span>
             </div>
         </div>
     </div>

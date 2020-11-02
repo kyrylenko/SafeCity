@@ -34,7 +34,7 @@ const ProjectDetails = (props: { project: IProject }) => {
                             </Carousel.Item>)}
                         </Carousel>
                     </div>
-                    <h3>Description</h3>
+                    <h3>Описання</h3>
                     <div>{project.longDescription}</div>
                 </div>
 

@@ -8,10 +8,10 @@ enum ProjectState {
 
 export const ProjectStateLabel = new Map<number, string>([
     [ProjectState.suggested, 'Suggested'],
-    [ProjectState.fundRaising, 'Fundraising'],
-    [ProjectState.inProgress, 'In progress'],
-    [ProjectState.completed, 'Completed'],
-    [ProjectState.rejected, 'Rejected']
+    [ProjectState.fundRaising, 'Збір коштів'],
+    [ProjectState.inProgress, 'В процесі'],
+    [ProjectState.completed, 'Завершені'],
+    [ProjectState.rejected, 'Відхилені']
   ]);
 
 export default ProjectState;

@@ -48,10 +48,10 @@ const ProjectList = (props: { projects: IProject[] }) => {
 
     return <div className='container'>
         <div className='pull-left'>
-            <h2 className='uppercase'>Active projects</h2>
+            <h2 className='uppercase'>Активні проекти</h2>
         </div>
         <div className='tabs-switcher'>
-            <div onClick={handleFilter(null)} className={`lbl lbl-all ${activeState === null && 'active'}`}>All</div>
+            <div onClick={handleFilter(null)} className={`lbl lbl-all ${activeState === null && 'active'}`}>Всі</div>
             <div onClick={handleFilter(ProjectState.fundRaising)} className={`lbl lbl-fundraising ${activeState === ProjectState.fundRaising && 'active'}`}>
                 {ProjectStateLabel.get(ProjectState.fundRaising)}
             </div>
