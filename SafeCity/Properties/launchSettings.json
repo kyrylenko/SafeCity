@@ -12,8 +12,7 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings:SafeCityConnectionString": "User Id =postgres;Password=Kashtan0;Server=localhost;Port=5432;Database=SafeCityDev;Integrated Security=true;Pooling=true;Client Encoding=UTF8;"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "SafeCity": {
