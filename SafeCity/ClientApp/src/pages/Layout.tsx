@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import auth from '../services/auth';
 
 function Layout(props: any) {
     return (
@@ -23,6 +24,9 @@ function Layout(props: any) {
                             </li>
                             <li className='nav-item mx-3'>
                                 <Nav.Link as={NavLink} to='/about'>Про нас</Nav.Link>
+                            </li>
+                            <li>
+                                <button onClick={auth.signIn}>login</button>
                             </li>
                         </Nav>
                     </Navbar.Collapse>

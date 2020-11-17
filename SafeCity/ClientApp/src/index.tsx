@@ -3,7 +3,14 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
+import auth from './services/auth';
 import * as serviceWorker from './serviceWorker';
+
+auth.load(updateSigninStatus);
+
+function updateSigninStatus(isSignedIn: boolean) {
+  console.log(`app loaded, signed in: ${isSignedIn} token: ${auth.getToken()}`);
+}
 
 const rootElement = document.getElementById('root');
 
