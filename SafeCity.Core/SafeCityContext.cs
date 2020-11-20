@@ -8,6 +8,7 @@ namespace SafeCity.Core
     {
         public DbSet<Project> Projects { get; set; }
         public DbSet<Donation> Donations { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public SafeCityContext(DbContextOptions<SafeCityContext> options) : base(options)
         {
@@ -16,11 +17,9 @@ namespace SafeCity.Core
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Project>()
-                .HasData(Seed.Projects);
-
-            modelBuilder.Entity<Donation>()
-                .HasData(Seed.Donations);
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
 
             modelBuilder.Entity<Project>()
                 .Property(e => e.Images)
@@ -33,6 +32,15 @@ namespace SafeCity.Core
                 .HasConversion(
                     v => string.Join(',', v),
                     v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+
+            modelBuilder.Entity<Project>()
+                .HasData(Seed.Projects);
+
+            modelBuilder.Entity<Donation>()
+                .HasData(Seed.Donations);
+
+            modelBuilder.Entity<User>()
+                .HasData(Seed.Users);
 
             base.OnModelCreating(modelBuilder);
         }
