@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using SafeCity.DTOs;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace SafeCity.Controllers
     {
         private readonly ILogger<ProjectsController> _logger;
         private readonly IProjectRepository _projectRepository;
+
         private readonly IMapper _mapper;
 
         public ProjectsController(ILogger<ProjectsController> logger, 
@@ -52,7 +54,7 @@ namespace SafeCity.Controllers
 
             return Ok(dto);
         }
-
+        [Authorize(Roles = "Authorized, Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] ProjectCreateDto project)
         {
@@ -65,7 +67,7 @@ namespace SafeCity.Controllers
 
             return CreatedAtRoute("GetById", new { dto.Id }, dto);
         }
-
+        [Authorize(Roles = "Authorized, Admin")]
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Put(int id, [FromBody] ProjectCreateDto project)
         {
@@ -83,7 +85,7 @@ namespace SafeCity.Controllers
 
             return NoContent();
         }
-
+        [Authorize(Roles = "Authorized, Admin")]
         [HttpPatch("{id:int}")]
         public async Task<IActionResult> Patch(int id, [FromBody] JsonPatchDocument<ProjectCreateDto> patchDoc)
         {
@@ -114,7 +116,7 @@ namespace SafeCity.Controllers
 
             return NoContent();
         }
-
+        [Authorize(Roles = "Authorized, Admin")]
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {

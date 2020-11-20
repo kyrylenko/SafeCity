@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SafeCity.Core;
 using SafeCity.Core.Repositories;
+using SafeCity.Middleware;
 using SafeCity.Services;
 
 namespace SafeCity
@@ -36,6 +37,7 @@ namespace SafeCity
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IDonationRepository, DonationRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<TokenDecryptionService>();
 
             services.AddScoped<ILiqPayService>(x =>
                 new LiqPayService(Configuration["LiqPay:PublicKey"], Configuration["LiqPay:PrivateKey"]));
@@ -79,6 +81,9 @@ namespace SafeCity
             //app.UseRouting();
 
             app.UseAuthentication();
+
+            app.UseRoleInTokenSetup()
+                .UseAuthorization();
 
             app.UseMvcWithDefaultRoute();
 
