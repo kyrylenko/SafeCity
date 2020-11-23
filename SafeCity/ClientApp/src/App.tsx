@@ -8,6 +8,7 @@ import Experts from './pages/Experts';
 import Report from './pages/Report';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
+import authStore from './mobx/authStore';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import './main.css';
@@ -15,7 +16,7 @@ import './app.css';
 
 function App() {
   return (
-    <Layout>
+    <Layout authStore={authStore}>
       <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/projects/:id' component={Project} />
