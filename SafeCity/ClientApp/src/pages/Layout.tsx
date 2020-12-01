@@ -1,9 +1,20 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import { NavLink } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import auth from '../services/auth';
 
-function Layout(props: any) {
+const Layout = observer(({ children, authStore }: { children: any, authStore: any }) => {
+    
+    const handleLogin = () => {
+        if (authStore.user) {
+            auth.signOut()
+        } else {
+            auth.signIn()
+        }
+    };
+
     return (
         <>
             <header>
@@ -29,7 +40,7 @@ function Layout(props: any) {
                 </Navbar>
             </header>
             <main>
-                {props.children}
+                {children}
             </main>
             <footer className='mt-auto'>
                 <div className='container'>
@@ -39,12 +50,14 @@ function Layout(props: any) {
                             <br />
                             тел: <a href='tel:+380959242349'>+3 8095 9242349</a>
                         </div>
-                        <div className='col-md-8'></div>
+                        <div className='col-md-8 text-right'>
+                            <button onClick={handleLogin} className='btn btn-link'>{authStore.user ? 'log out' : 'log in'}</button>
+                        </div>
                     </div>
                 </div>
             </footer>
         </>
     );
-}
+})
 
 export default Layout;

@@ -1,7 +1,7 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SafeCity.Core;
 using SafeCity.Core.Repositories;
+using SafeCity.Middleware;
 using SafeCity.Services;
 
 namespace SafeCity
@@ -25,32 +26,37 @@ namespace SafeCity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(jwt => jwt.UseGoogle(
+                    clientId: Configuration["Authentication:Google:ClientId"]));
+
+            services.AddControllers().AddNewtonsoftJson();
+
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IDonationRepository, DonationRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<TokenDecryptionService>();
+
+            services.AddScoped<ILiqPayService>(x =>
+                new LiqPayService(Configuration["LiqPay:PublicKey"], Configuration["LiqPay:PrivateKey"]));
+
+            services.AddAutoMapper(typeof(Startup).Assembly);
+
             services.AddMvc(p =>
             {
                 p.EnableEndpointRouting = false;
             });
 
-            services.AddControllersWithViews();
-            services.AddControllers().AddNewtonsoftJson();
-
             services.AddDbContext<SafeCityContext>(
-                    opt => opt.UseNpgsql(Configuration["ConnectionStrings:SafeCityConnectionString"]));
+                opt => opt.UseNpgsql(Configuration["ConnectionStrings:SafeCityConnectionString"]));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
             });
-
-            services.AddHttpContextAccessor();
-
-            services.AddScoped<IProjectRepository, ProjectRepository>();
-            services.AddScoped<IDonationRepository, DonationRepository>();
-            
-            services.AddScoped<ILiqPayService>(x =>
-                new LiqPayService(Configuration["LiqPay:PublicKey"], Configuration["LiqPay:PrivateKey"]));
-
-            services.AddAutoMapper(typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,20 +73,19 @@ namespace SafeCity
                 app.UseHsts();
             }
 
-            app.UseMvc();
-
+            //app.UseMvc();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseRouting();
+            //app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-            });
+            app.UseAuthentication();
+
+            app.UseRoleInTokenSetup()
+                .UseAuthorization();
+
+            app.UseMvcWithDefaultRoute();
 
             app.UseSpa(spa =>
             {

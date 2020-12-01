@@ -104,5 +104,18 @@ namespace SafeCity.Core
                 Ip = "92.253.252.0"
             }
         };
+
+        public static User[] Users { get; } =
+        {
+            new User()
+            {
+                Id = Guid.NewGuid(),
+                Email = "kirilenko.pavlo@gmail.com",
+                FamilyName = "Pavlo",
+                GivenName = "Kyrylenko",
+                Picture = "https://lh3.googleusercontent.com/a-/AOh14GhhOenSg9NkV2y8V170GpLKP-8Hzn5wncPxGqvkkg=s96-c",
+                Role = Role.Admin
+            }
+        };
     }
 }

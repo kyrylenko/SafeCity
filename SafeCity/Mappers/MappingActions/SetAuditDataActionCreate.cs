@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using SafeCity.Core.Entities;
@@ -19,8 +20,8 @@ namespace SafeCity.Mappers.MappingActions
 
         public void Process(TSource source, TDestination destination, ResolutionContext context)
         {
-            //destination.CreatedBy = _httpContextAccessor.HttpContext.User.FindFirst(JwtRegisteredClaimNames.Email).Value;
-            destination.CreatedBy = "chuck.norris@gmail.com";
+            destination.CreatedBy = _httpContextAccessor.HttpContext.User.FindFirst(JwtRegisteredClaimNames.Email).Value;
+            //destination.CreatedBy = "chuck.norris@gmail.com";
             destination.CreatedDate = DateTime.Now;
         }
     }

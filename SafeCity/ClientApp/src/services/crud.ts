@@ -1,12 +1,15 @@
+import auth from './auth';
 
-export async function get(url:string) {
-    const idToken = 'dummy_token';
-    const options = {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${idToken}`,
-        },
-    };
+enum Method {
+    GET = 'GET',
+    POST = 'POST',
+    PUT = 'PUT',
+    DELETE = 'DELETE',
+}
+
+export async function get(url: string) {
+    const options = getOptions(Method.GET);
+    
     return new Promise((resolve, reject) => {
         fetch(url, options)
             .then(res => {
@@ -24,21 +27,16 @@ export async function get(url:string) {
 };
 
 export async function post(url:string, entity:any) {
-    return await action(url, 'POST', entity);
+    return await action(url, Method.POST, entity);
 };
 
 export async function put(url:string, entity:any) {
-    return await action(url, 'PUT', entity);
+    return await action(url, Method.PUT, entity);
 };
 
 export async function del(url:string) {
-    const idToken = 'dummy_token';
-    const options = {
-        headers: {
-            'Authorization': `Bearer ${idToken}`,
-        },
-        method: 'DELETE',
-    };
+    const options = getOptions(Method.DELETE);
+
     return new Promise((resolve, reject) => {
         fetch(url, options)
             .then(res => {
@@ -51,17 +49,29 @@ export async function del(url:string) {
     });
 };
 
-async function action(url:string, method:string, entity:any) {
-    const idToken = 'dummy_token';
+function getOptions(method:Method, entity:any|undefined = undefined): RequestInit{
+    const idToken = auth.getToken();
+
     const options = {
-        method: method,
-        headers: {
+        method,
+    } as RequestInit;
+
+    if(idToken){
+        options.headers = {
             'Authorization': `Bearer ${idToken}`,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(entity),
-    };
+        };
+    }
+    if(entity){
+        options.body = JSON.stringify(entity);
+    }
+
+    return options;
+};
+
+async function action(url:string, method:Method, entity:any) {
+    const options = getOptions(method, entity);
 
     return new Promise((resolve, reject) => {
         fetch(url, options)

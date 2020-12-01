@@ -3,7 +3,22 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
+import auth from './services/auth';
+import usersService from './services/usersService';
 import * as serviceWorker from './serviceWorker';
+import authStore from './mobx/authStore';
+
+auth.load(updateSigninStatus);
+
+function updateSigninStatus(isSignedIn: boolean) {
+  if (isSignedIn) {
+    usersService.getMe()
+      .then(me => authStore.setUser(me))
+      .catch(err => console.log('getMe err ', err));
+  } else {
+    authStore.setUser(null);
+  }
+}
 
 const rootElement = document.getElementById('root');
 
